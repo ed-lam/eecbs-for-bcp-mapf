@@ -11,6 +11,11 @@
 #include <boost/unordered_set.hpp>
 #include <boost/unordered_map.hpp>
 
+namespace eecbs
+{
+
+using namespace eecbs;
+
 using boost::heap::pairing_heap;
 using boost::heap::compare;
 using boost::unordered_map;
@@ -35,7 +40,7 @@ using std::ofstream;
 using std::cerr;
 using std::string;
 
-// #define NDEBUG 
+// #define NDEBUG
 
 #define MAX_TIMESTEP INT_MAX / 2
 #define MAX_COST INT_MAX / 2
@@ -72,3 +77,4 @@ bool isSamePath(const Path& p1, const Path& p2);
     }
 };*/
 
+}

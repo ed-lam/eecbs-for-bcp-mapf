@@ -1,5 +1,9 @@
-#include "ECBS.h"
+#include "eecbs/inc/ECBS.h"
 
+namespace eecbs
+{
+
+using namespace eecbs;
 
 bool ECBS::solve(double time_limit, int _cost_lowerbound)
 {
@@ -786,3 +790,4 @@ void ECBS::clear()
     solution_cost = -2;
 }
 
+}

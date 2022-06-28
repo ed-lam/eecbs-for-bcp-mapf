@@ -1,5 +1,10 @@
 #pragma once
-#include "MDD.h"
+#include "eecbs/inc/MDD.h"
+
+namespace eecbs
+{
+
+using namespace eecbs;
 
 //enum rectangle_strategy { NR, R, RM, DISJOINTR };
 
@@ -11,7 +16,7 @@ public:
 
 	RectangleReasoning(const Instance& instance) : instance(instance) {}
 
-	shared_ptr<Conflict> run(const vector<Path*>& paths, int timestep, 
+	shared_ptr<Conflict> run(const vector<Path*>& paths, int timestep,
 		int a1, int a2, const MDD* mdd1, const MDD* mdd2);
 
 
@@ -77,3 +82,4 @@ private:
 
 };
 
+}

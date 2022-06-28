@@ -1,10 +1,14 @@
 ﻿#include <algorithm>    // std::shuffle
 #include <random>      // std::default_random_engine
 #include <chrono>       // std::chrono::system_clock
-#include "CBS.h"
-#include "SIPP.h"
-#include "SpaceTimeAStar.h"
+#include "eecbs/inc/CBS.h"
+#include "eecbs/inc/SIPP.h"
+#include "eecbs/inc/SpaceTimeAStar.h"
 
+namespace eecbs
+{
+
+using namespace eecbs;
 
 // takes the paths_found_initially and UPDATE all (constrained) paths found for agents from curr to start
 inline void CBS::updatePaths(CBSNode* curr)
@@ -120,7 +124,7 @@ void CBS::findConflicts(HLNode& curr, int a1, int a2)
 					conflict->vertexConflict(a1_, a2_, loc1, timestep);
 				assert(!conflict->constraint1.empty());
 				assert(!conflict->constraint2.empty());
-				curr.unknownConf.push_front(conflict); // It's at least a semi conflict			
+				curr.unknownConf.push_front(conflict); // It's at least a semi conflict
 			}
 		}
 	}
@@ -963,7 +967,7 @@ void CBS::saveResults(const string &fileName, const string &instanceName) const
 		addHeads.close();
 	}
 	ofstream stats(fileName, std::ios::app);
-	stats << runtime << "," << 
+	stats << runtime << "," <<
 		num_HL_expanded << "," << num_HL_generated << "," <<
 		num_LL_expanded << "," << num_LL_generated << "," <<
 
@@ -977,16 +981,16 @@ void CBS::saveResults(const string &fileName, const string &instanceName) const
 		num_cleanup << "," << num_open << "," << num_focal << "," <<
 
 		heuristic_helper.num_solve_MVC << "," <<
-		heuristic_helper.num_merge_MDDs << "," << 
-		heuristic_helper.num_solve_2agent_problems << "," << 
+		heuristic_helper.num_merge_MDDs << "," <<
+		heuristic_helper.num_solve_2agent_problems << "," <<
 		heuristic_helper.num_memoization << "," <<
 		heuristic_helper.getCostError() << "," << heuristic_helper.getDistanceError() << "," <<
-		heuristic_helper.runtime_build_dependency_graph << "," << 
+		heuristic_helper.runtime_build_dependency_graph << "," <<
 		heuristic_helper.runtime_solve_MVC << "," <<
 
-		
 
-		runtime_detect_conflicts << "," << 
+
+		runtime_detect_conflicts << "," <<
 		rectangle_helper.accumulated_runtime << "," << corridor_helper.accumulated_runtime << "," << mutex_helper.accumulated_runtime << "," <<
 		mdd_helper.accumulated_runtime << "," << runtime_build_CT << "," << runtime_build_CAT << "," <<
 		runtime_path_finding << "," << runtime_generate_child << "," <<
@@ -1030,7 +1034,7 @@ void CBS::saveStats(const string &fileName, const string &instanceName)
 		int dg = heuristic_helper.computeInformedHeuristics(*dummy_start, time_limit);
 		// int mvc = heuristic_helper.MVConAllConflicts(*dummy_start);
 		int mvc = 0;
-		out << greedy << "," << dg << "," << mvc << "," << dummy_start->conflicts.size() << "," << 
+		out << greedy << "," << dg << "," << mvc << "," << dummy_start->conflicts.size() << "," <<
 			dummy_start->distance_to_go << endl;
 		out.close();
 	}*/
@@ -1086,15 +1090,15 @@ void CBS::saveCT(const string &fileName) const // write the CT to a file
 		output << "}" << endl;
 		output.close();
 	}
-	
+
 	// Write the stats of the tree to a CSV file
 	{
 		std::ofstream output;
 		output.open(fileName + "-tree.csv", std::ios::out);
 		// header
-		output << "time generated,g value,h value,h^ value,d value,depth,time expanded,chosen from,h computed," 
-			<< "f of best in cleanup,f^ of best in cleanup,d of best in cleanup," 
-			<< "f of best in open,f^ of best in open,d of best in open," 
+		output << "time generated,g value,h value,h^ value,d value,depth,time expanded,chosen from,h computed,"
+			<< "f of best in cleanup,f^ of best in cleanup,d of best in cleanup,"
+			<< "f of best in open,f^ of best in open,d of best in open,"
 			<< "f of best in focal,f^ of best in focal,d of best in focal,"
 			<< "praent,goal node" << endl;
 		for (auto& node : allNodes_table)
@@ -1338,7 +1342,7 @@ bool CBS::solve(double _time_limit, int _cost_lowerbound, int _cost_upperbound)
 				case conflict_type::RECTANGLE:
 					num_rectangle_conflicts++;
 					break;
-				case conflict_type::CORRIDOR: 
+				case conflict_type::CORRIDOR:
 					num_corridor_conflicts++;
 					break;
 				case  conflict_type::TARGET:
@@ -1455,9 +1459,9 @@ void CBS::addConstraints(const HLNode* curr, HLNode* child1, HLNode* child2) con
 CBS::CBS(vector<SingleAgentSolver*>& search_engines,
 	const vector<ConstraintTable>& initial_constraints,
 	vector<Path>& paths_found_initially, int screen) :
-	screen(screen), suboptimality(1), 
+	screen(screen), suboptimality(1),
 	initial_constraints(initial_constraints), paths_found_initially(paths_found_initially),
-	search_engines(search_engines), 
+	search_engines(search_engines),
 	mdd_helper(initial_constraints, search_engines),
 	rectangle_helper(search_engines[0]->instance),
 	mutex_helper(search_engines[0]->instance, initial_constraints),
@@ -1478,7 +1482,7 @@ CBS::CBS(const Instance& instance, bool sipp, int screen) :
 	heuristic_helper(instance.getDefaultNumberOfAgents(), paths, search_engines, initial_constraints, mdd_helper)
 {
 	clock_t t = clock();
-	initial_constraints.resize(num_of_agents, 
+	initial_constraints.resize(num_of_agents,
 		ConstraintTable(instance.num_of_cols, instance.map_size));
 
 	search_engines.resize(num_of_agents);
@@ -1673,7 +1677,7 @@ bool CBS::validateSolution() const
 					if (loc1 == loc2)
 					{
 						cout << "Agents " << a1 << " and " << a2 << " collides at " << loc1 << " at timestep " << timestep << endl;
-						return false; // It's at least a semi conflict			
+						return false; // It's at least a semi conflict
 					}
 				}
 			}
@@ -1706,4 +1710,6 @@ void CBS::clear()
 	goal_node = nullptr;
 	solution_found = false;
 	solution_cost = -2;
+}
+
 }

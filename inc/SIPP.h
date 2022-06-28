@@ -1,6 +1,11 @@
 ﻿#pragma once
-#include "SingleAgentSolver.h"
-#include "ReservationTable.h"
+#include "eecbs/inc/SingleAgentSolver.h"
+#include "eecbs/inc/ReservationTable.h"
+
+namespace eecbs
+{
+
+using namespace eecbs;
 
 class SIPPNode: public LLNode
 {
@@ -53,7 +58,7 @@ public:
 		bool operator()(const SIPPNode* n1, const SIPPNode* n2) const
 		{
 			return (n1 == n2) ||
-				(n1 && n2 && n1->location == n2->location && 
+				(n1 && n2 && n1->location == n2->location &&
 					n1->wait_at_goal == n2->wait_at_goal &&
 					get<0>(n1->interval) == get<0>(n2->interval)); //TODO: do we need to compare timestep here?
 		}
@@ -94,7 +99,7 @@ private:
 
 	void generateChild(const Interval& interval, SIPPNode* curr, int next_location,
 		const ReservationTable& reservation_table);
-	
+
 	// Updates the path datamember
 	void updatePath(const LLNode* goal, std::vector<PathEntry> &path);
 	inline SIPPNode* popNode();
@@ -103,3 +108,4 @@ private:
 	void releaseNodes();
 };
 
+}

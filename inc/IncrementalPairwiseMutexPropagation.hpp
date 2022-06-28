@@ -1,8 +1,13 @@
 #ifndef IPMP_H
 #define IPMP_H
 
-#include "MDD.h"
-#include "SingleAgentSolver.h"
+#include "eecbs/inc/MDD.h"
+#include "eecbs/inc/SingleAgentSolver.h"
+
+namespace eecbs
+{
+
+using namespace eecbs;
 
 typedef std::vector <Constraint> con_vec;
 
@@ -34,5 +39,7 @@ public:
 
 
 };
+
+}
 
 #endif

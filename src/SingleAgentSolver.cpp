@@ -1,5 +1,9 @@
-#include "SingleAgentSolver.h"
+#include "eecbs/inc/SingleAgentSolver.h"
 
+namespace eecbs
+{
+
+using namespace eecbs;
 
 list<int> SingleAgentSolver::getNextLocations(int curr) const // including itself and its neighbors
 {
@@ -51,4 +55,6 @@ void SingleAgentSolver::compute_heuristics()
 			}
 		}
 	}
+}
+
 }

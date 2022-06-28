@@ -1,6 +1,11 @@
 ﻿#pragma once
-#include "Instance.h"
-#include "ConstraintTable.h"
+#include "eecbs/inc/Instance.h"
+#include "eecbs/inc/ConstraintTable.h"
+
+namespace eecbs
+{
+
+using namespace eecbs;
 
 class LLNode // low-level node
 {
@@ -105,14 +110,14 @@ public:
 	// int getGoalLocation() const {return instance.goal_locations[agent]; }
 
 	SingleAgentSolver(const Instance& instance, int agent) :
-		instance(instance), //agent(agent), 
+		instance(instance), //agent(agent),
 		start_location(instance.start_locations[agent]),
 		goal_location(instance.goal_locations[agent])
 	{
 		compute_heuristics();
 	}
 
-  virtual ~SingleAgentSolver(){} 
+  virtual ~SingleAgentSolver(){}
 
 protected:
 	int min_f_val; // minimal f value in OPEN
@@ -123,3 +128,4 @@ protected:
 	int get_DH_heuristic(int from, int to) const { return abs(my_heuristic[from] - my_heuristic[to]); }
 };
 
+}

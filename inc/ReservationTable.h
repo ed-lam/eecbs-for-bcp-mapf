@@ -1,6 +1,11 @@
 // This is used by SIPP
 #pragma once
-#include "ConstraintTable.h"
+#include "eecbs/inc/ConstraintTable.h"
+
+namespace eecbs
+{
+
+using namespace eecbs;
 
 typedef tuple<size_t, size_t, size_t> Interval; // [t_min, t_max), num_of_collisions
 
@@ -36,8 +41,10 @@ private:
     void insertSoftConstraint2RT(size_t location, size_t t_min, size_t t_max);
 	// void mergeIntervals(list<Interval >& intervals) const;
 
-	
+
 	void updateSIT(size_t location); // update SIT at the gvien location
 
 	int getNumOfConflictsForStep(size_t curr_id, size_t next_id, size_t next_timestep) const;
 };
+
+}

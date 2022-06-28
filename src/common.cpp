@@ -1,4 +1,9 @@
-#include "common.h"
+#include "eecbs/inc/common.h"
+
+namespace eecbs
+{
+
+using namespace eecbs;
 
 std::ostream& operator<<(std::ostream& os, const Path& path)
 {
@@ -20,4 +25,6 @@ bool isSamePath(const Path& p1, const Path& p2)
 			return false;
 	}
 	return true;
+}
+
 }

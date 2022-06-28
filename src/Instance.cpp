@@ -1,19 +1,24 @@
-#include<boost/tokenizer.hpp>
+#include <boost/tokenizer.hpp>
 #include <algorithm>    // std::shuffle
 #include <random>      // std::default_random_engine
 #include <chrono>       // std::chrono::system_clock
-#include"Instance.h"
+#include "eecbs/inc/Instance.h"
+
+namespace eecbs
+{
+
+using namespace eecbs;
 
 int RANDOM_WALK_STEPS = 100000;
 
-Instance::Instance(const string& map_fname, const string& agent_fname, 
+Instance::Instance(const string& map_fname, const string& agent_fname,
 	int num_of_agents, int num_of_rows, int num_of_cols, int num_of_obstacles, int warehouse_width):
 	map_fname(map_fname), agent_fname(agent_fname), num_of_agents(num_of_agents)
 {
 	bool succ = loadMap();
 	if (!succ)
 	{
-		if (num_of_rows > 0 && num_of_cols > 0 && num_of_obstacles >= 0 && 
+		if (num_of_rows > 0 && num_of_cols > 0 && num_of_obstacles >= 0 &&
 			num_of_obstacles < num_of_rows * num_of_cols) // generate random grid
 		{
 			generateConnectedRandomGrid(num_of_rows, num_of_cols, num_of_obstacles);
@@ -82,7 +87,7 @@ void Instance::generateRandomAgents(int warehouse_width)
 			int start = linearizeCoordinate(x, y);
 			if (my_map[start] || starts[start])
 				continue;
-				
+
 			// update start
 			start_locations[k] = start;
 			starts[start] = true;
@@ -158,15 +163,15 @@ bool Instance::addObstacle(int obstacle)
 	int goal = 1;
 	while (start < 3 && goal < 4)
 	{
-		if (x[start] < 0 || x[start] >= num_of_rows || y[start] < 0 || y[start] >= num_of_cols 
+		if (x[start] < 0 || x[start] >= num_of_rows || y[start] < 0 || y[start] >= num_of_cols
 			|| my_map[linearizeCoordinate(x[start], y[start])])
 			start++;
 		else if (goal <= start)
 			goal = start + 1;
-		else if (x[goal] < 0 || x[goal] >= num_of_rows || y[goal] < 0 || y[goal] >= num_of_cols 
+		else if (x[goal] < 0 || x[goal] >= num_of_rows || y[goal] < 0 || y[goal] >= num_of_cols
 			|| my_map[linearizeCoordinate(x[goal], y[goal])])
 			goal++;
-		else if (isConnected(linearizeCoordinate(x[start], y[start]), linearizeCoordinate(x[goal], y[goal]))) // cannot find a path from start to goal 
+		else if (isConnected(linearizeCoordinate(x[start], y[start]), linearizeCoordinate(x[goal], y[goal]))) // cannot find a path from start to goal
 		{
 			start = goal;
 			goal++;
@@ -347,7 +352,7 @@ bool Instance::loadAgents()
 
 	string line;
 	ifstream myfile (agent_fname.c_str());
-	if (!myfile.is_open()) 
+	if (!myfile.is_open())
 	return false;
 
 	getline(myfile, line);
@@ -418,9 +423,9 @@ bool Instance::loadAgents()
 
 void Instance::printAgents() const
 {
-  for (int i = 0; i < num_of_agents; i++) 
+  for (int i = 0; i < num_of_agents; i++)
   {
-    cout << "Agent" << i << " : S=(" << getRowCoordinate(start_locations[i]) << "," << getColCoordinate(start_locations[i]) 
+    cout << "Agent" << i << " : S=(" << getRowCoordinate(start_locations[i]) << "," << getColCoordinate(start_locations[i])
 				<< ") ; G=(" << getRowCoordinate(goal_locations[i]) << "," << getColCoordinate(goal_locations[i]) << ")" << endl;
   }
 }
@@ -453,4 +458,6 @@ list<int> Instance::getNeighbors(int curr) const
 			neighbors.emplace_back(next);
 	}
 	return neighbors;
+}
+
 }

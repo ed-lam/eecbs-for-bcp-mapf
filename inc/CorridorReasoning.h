@@ -1,7 +1,12 @@
 #pragma once
-#include "ReservationTable.h"
-#include "Instance.h"
-#include "SingleAgentSolver.h"
+#include "eecbs/inc/ReservationTable.h"
+#include "eecbs/inc/Instance.h"
+#include "eecbs/inc/SingleAgentSolver.h"
+
+namespace eecbs
+{
+
+using namespace eecbs;
 
 // enum corridor_strategy { NC, C, DISJOINTC };
 
@@ -14,7 +19,7 @@ public:
 	CorridorReasoning(const vector<SingleAgentSolver*>& search_engines,
 		const vector<ConstraintTable>& initial_constraints):
 		search_engines(search_engines), initial_constraints(initial_constraints) {}
-	
+
 	shared_ptr<Conflict> run(const shared_ptr<Conflict>& conflict,
 		const vector<Path*>& paths, const HLNode& node);
 
@@ -25,7 +30,7 @@ private:
 	shared_ptr<Conflict> findCorridorConflict(const shared_ptr<Conflict>& conflict,
 		const vector<Path*>& paths, const HLNode& node);
 	int findCorridor(const shared_ptr<Conflict>& conflict,
-		const vector<Path*>& paths, int endpoints[], int endpoints_time[]); // return the length of the corridor 
+		const vector<Path*>& paths, int endpoints[], int endpoints_time[]); // return the length of the corridor
 	int getEnteringTime(const std::vector<PathEntry>& path, const std::vector<PathEntry>& path2, int t);
 	int getExitingTime(const std::vector<PathEntry>& path, int t);
 	int getCorridorLength(const std::vector<PathEntry>& path, int t_start, int loc_end, std::pair<int, int>& edge);
@@ -41,4 +46,4 @@ private:
 
 };
 
-
+}

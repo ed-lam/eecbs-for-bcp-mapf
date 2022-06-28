@@ -1,10 +1,15 @@
-#include "IncrementalPairwiseMutexPropagation.hpp"
-#include "MDD.h"
+#include "eecbs/inc/IncrementalPairwiseMutexPropagation.hpp"
+#include "eecbs/inc/MDD.h"
+
+namespace eecbs
+{
+
+using namespace eecbs;
 
 class MutexReasoning{
 public:
 	double accumulated_runtime = 0;
-	MutexReasoning(const Instance& instance, const vector<ConstraintTable>& initial_constraints) : 
+	MutexReasoning(const Instance& instance, const vector<ConstraintTable>& initial_constraints) :
 		instance(instance), initial_constraints(initial_constraints) {}
 	shared_ptr<Conflict> run(int a1, int a2, CBSNode& node, MDD* mdd_1, MDD* mdd_2);
 
@@ -28,3 +33,5 @@ private:
 
 // other TODOs
 // TODO duplicated cardinal test in classify conflicts
+
+}

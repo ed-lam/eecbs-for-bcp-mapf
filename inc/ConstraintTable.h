@@ -1,7 +1,11 @@
 #pragma once
-#include "common.h"
-#include "CBSNode.h"
+#include "eecbs/inc/common.h"
+#include "eecbs/inc/CBSNode.h"
 
+namespace eecbs
+{
+
+using namespace eecbs;
 
 class ConstraintTable
 {
@@ -33,7 +37,7 @@ public:
 	    landmarks.clear();
 	    cat.clear();
 	}
-	void build(const HLNode& node, int agent); // build the constraint table for the given agent at the give node 
+	void build(const HLNode& node, int agent); // build the constraint table for the given agent at the give node
 	void buildCAT(int agent, const vector<Path*>& paths, size_t cat_size); // build the conflict avoidance table
 
 	void insert2CT(size_t loc, int t_min, int t_max); // insert a vertex constraint to the constraint table
@@ -55,3 +59,4 @@ private:
 
 };
 
+}

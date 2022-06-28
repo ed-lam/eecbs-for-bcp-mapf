@@ -1,7 +1,11 @@
 #pragma once
-#include "CBS.h"
-#include "ECBSNode.h"
+#include "eecbs/inc/CBS.h"
+#include "eecbs/inc/ECBSNode.h"
 
+namespace eecbs
+{
+
+using namespace eecbs;
 
 class ECBS : public CBS
 {
@@ -12,7 +16,7 @@ public:
 	// ECBSNode* goal_node = nullptr;
 
 	////////////////////////////////////////////////////////////////////////////////////////////
-	// Runs the algorithm until the problem is solved or time is exhausted 
+	// Runs the algorithm until the problem is solved or time is exhausted
 	bool solve(double time_limit, int cost_lowerbound = 0);
     void clear(); // used for rapid random  restart
 
@@ -42,3 +46,5 @@ private:
 	void updatePaths(ECBSNode* curr);
 	void printPaths() const;
 };
+
+}

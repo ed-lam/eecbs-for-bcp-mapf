@@ -1,4 +1,9 @@
-#include "ConstraintTable.h"
+#include "eecbs/inc/ConstraintTable.h"
+
+namespace eecbs
+{
+
+using namespace eecbs;
 
 void ConstraintTable::insert2CT(size_t from, size_t to, int t_min, int t_max)
 {
@@ -75,7 +80,7 @@ bool ConstraintTable::constrained(size_t loc, int t) const
 		const auto& it = landmarks.find(t);
 		if (it != landmarks.end() && it->second != loc)
 			return true;  // violate the positive vertex constraint
-	}	
+	}
 
 	const auto& it = ct.find(loc);
 	if (it == ct.end())
@@ -108,7 +113,7 @@ void ConstraintTable::copy(const ConstraintTable& other)
 	// we do not copy cat
 }
 
-// build the constraint table for the given agent at the give node 
+// build the constraint table for the given agent at the give node
 void ConstraintTable::build(const HLNode& node, int agent)
 {
 	auto curr = &node;
@@ -133,7 +138,7 @@ void ConstraintTable::build(const HLNode& node, int agent)
 				break;
 			case constraint_type::POSITIVE_VERTEX:
 				assert(curr->constraints.size() == 1);
-				if (agent == a) // this agent has to be at x at timestep t 
+				if (agent == a) // this agent has to be at x at timestep t
 				{
 					insertLandmark(x, t);
 				}
@@ -257,4 +262,6 @@ int ConstraintTable::getHoldingTime() const
 			rst = max(rst, (int)landmark.first + 1);
 	}
 	return rst;
+}
+
 }

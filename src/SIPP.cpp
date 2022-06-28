@@ -1,5 +1,9 @@
-#include "SIPP.h"
+#include "eecbs/inc/SIPP.h"
 
+namespace eecbs
+{
+
+using namespace eecbs;
 
 void SIPP::updatePath(const LLNode* goal, vector<PathEntry> &path)
 {
@@ -63,7 +67,7 @@ pair<Path, int> SIPP::findSuboptimalPath(const HLNode& node, const ConstraintTab
 	min_f_val = max(holding_time, max((int)start->getFVal(), lowerbound));
 
 
-	while (!open_list.empty()) 
+	while (!open_list.empty())
 	{
 		updateFocalList(); // update FOCAL if min f-val increased
 		SIPPNode* curr = focal_list.top(); focal_list.pop();
@@ -88,7 +92,7 @@ pair<Path, int> SIPP::findSuboptimalPath(const HLNode& node, const ConstraintTab
 				generateChild(interval, curr, next_location, reservation_table);
 			}
 		}  // end for loop that generates successors
-		   
+
 		// wait at the current location
 		bool found = reservation_table.find_safe_interval(interval, curr->location, get<1>(curr->interval));
 		if (found)
@@ -96,7 +100,7 @@ pair<Path, int> SIPP::findSuboptimalPath(const HLNode& node, const ConstraintTab
 			generateChild(interval, curr, curr->location, reservation_table);
 		}
 	}  // end while loop
-	  
+
 	  // no path found
 	releaseNodes();
 	return {path, min_f_val};
@@ -148,7 +152,7 @@ void SIPP::releaseNodes()
 }
 
 
-void SIPP::generateChild(const Interval& interval, SIPPNode* curr, int next_location, 
+void SIPP::generateChild(const Interval& interval, SIPPNode* curr, int next_location,
 	const ReservationTable& reservation_table)
 {
 	// compute cost to next_id via curr node
@@ -205,7 +209,7 @@ void SIPP::generateChild(const Interval& interval, SIPPNode* curr, int next_loca
 			if (add_to_focal)
 				existing_next->focal_handle = focal_list.push(existing_next);
 			if (update_in_focal)
-				focal_list.update(existing_next->focal_handle);  // should we do update? yes, because number of conflicts may go up or down			
+				focal_list.update(existing_next->focal_handle);  // should we do update? yes, because number of conflicts may go up or down
 		}
 	}
 
@@ -333,4 +337,6 @@ int SIPP::getTravelTime(int start, int end, const ConstraintTable& constraint_ta
 	}
 	nodes.clear();
 	return length;*/
+}
+
 }

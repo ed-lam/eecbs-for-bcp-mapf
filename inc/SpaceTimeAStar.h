@@ -1,6 +1,10 @@
 ﻿#pragma once
-#include "SingleAgentSolver.h"
+#include "eecbs/inc/SingleAgentSolver.h"
 
+namespace eecbs
+{
+
+using namespace eecbs;
 
 class AStarNode: public LLNode
 {
@@ -87,3 +91,5 @@ private:
 	void releaseNodes();
 
 };
+
+}

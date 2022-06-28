@@ -1,16 +1,20 @@
-#include "ReservationTable.h"
+#include "eecbs/inc/ReservationTable.h"
 
+namespace eecbs
+{
+
+using namespace eecbs;
 
 /*int ResevationTable::get_holding_time(int location)
-{ 
+{
 	auto it = constraints.find(location);
 	if (it != constraints.end())
 	{
 		for (auto constraint : it->second)
 			insert_constraint(location, constraint.first, constraint.second);
 	}
-	
-	if (RT.find(location) == RT.end()) 
+
+	if (RT.find(location) == RT.end())
 	{
 		return 0;
 	}
@@ -101,7 +105,7 @@ void ReservationTable::insert2RT(size_t location, size_t t_min, size_t t_max)
     for (auto it = sit[location].begin(); it != sit[location].end();)
     {
         if (t_min >= get<1>(*it))
-			++it; 
+			++it;
         else if (t_max <= get<0>(*it))
             break;
        else  if (get<0>(*it) < t_min && get<1>(*it) <= t_max)
@@ -220,7 +224,7 @@ void ReservationTable::updateSIT(size_t location)
 		}
 
 		// negative constraints
-		const auto& it = ct.find(location); 
+		const auto& it = ct.find(location);
 		if (it != ct.end())
 		{
 			for (auto time_range : it->second)
@@ -277,7 +281,7 @@ list<Interval> ReservationTable::get_safe_intervals(size_t location, size_t lowe
         return rst;
 
 	updateSIT(location);
-	
+
 	const auto& it = sit.find(location);
 
     if (it == sit.end())
@@ -371,4 +375,6 @@ void ReservationTable::print() const
         }
     }
     cout << endl;
+}
+
 }

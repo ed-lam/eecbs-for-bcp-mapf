@@ -1,7 +1,12 @@
-#include "IncrementalPairwiseMutexPropagation.hpp"
+#include "eecbs/inc/IncrementalPairwiseMutexPropagation.hpp"
 
 #include <iostream>
-#include "ConstraintPropagation.h"
+#include "eecbs/inc/ConstraintPropagation.h"
+
+namespace eecbs
+{
+
+using namespace eecbs;
 
 using namespace std;
 IPMutexPropagation::IPMutexPropagation(MDD* MDD_0, MDD* MDD_1,
@@ -89,4 +94,6 @@ std::pair<con_vec, con_vec> IPMutexPropagation::gen_constraints(){
   // cout << "no solution found";
 
   return {{}, {}};
+}
+
 }
