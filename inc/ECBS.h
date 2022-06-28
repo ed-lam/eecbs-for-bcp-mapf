@@ -20,6 +20,8 @@ public:
 	bool solve(double time_limit, int cost_lowerbound = 0);
     void clear(); // used for rapid random  restart
 
+	const auto& getPaths() const { return paths; }
+
 private:
 	vector<int> min_f_vals; // lower bounds of the cost of the shortest path
 	vector< pair<Path, int> > paths_found_initially;  // contain initial paths found
